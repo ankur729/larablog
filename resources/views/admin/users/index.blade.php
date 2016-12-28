@@ -31,7 +31,7 @@
         <td>{{$user->id}}</td>
         
 		<td><a href="{{route('admin.user.edit',$user->id)}}">{{$user->name}}</a></td>
-        <td><a href="../../public/{{$user->photo->file}}"><img class="img-circle" src="../../public/{{$user->photo ? $user->photo->file : 'http://placehold.it/350x150'}}" style="width:50px;height: 50px;"></a></td>
+        <td><a href="../user_image/{{$user->photo->file}}"><img class="img-circle" src="../user_image/{{$user->photo ? $user->photo->file : 'http://placehold.it/350x150'}}" style="width:50px;height: 50px;"></a></td>
         <td>{{$user->role->name}}</td>
         <td>{{$user->is_active==1? 'ACTIVE' :'NOT ACTIVE'}}</td>
         

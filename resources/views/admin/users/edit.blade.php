@@ -12,7 +12,7 @@
 
 <div class="col-sm-3">
 	
-<a href="../../../{{$user->photo ? $user->photo->file :'http://placehold.it/350x150'}}"><img src="../../../{{$user->photo ? $user->photo->file :'http://placehold.it/350x150'}}" class="img-responsive img-circle" style="border:1px solid black;width: 250px;height: 200px;"></a>
+<a href="../../../user_image/{{$user->photo ? $user->photo->file :'http://placehold.it/350x150'}}"><img src="../../../user_image/{{$user->photo ? $user->photo->file :'http://placehold.it/350x150'}}" class="img-responsive img-circle" style="border:1px solid black;width: 250px;height: 200px;"></a>
 </div>
 
 <div class="col-sm-9">

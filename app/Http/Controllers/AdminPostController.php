@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\PostCreateRequest;
+use App\Http\Requests\PostEditRequest;
 use App\Http\Requests;
 use App\Post;
 use App\Photo;
@@ -83,7 +84,9 @@ class AdminPostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $posts=Post::findOrFail($id);
+        $categories=Category::lists('name','id')->all();
+        return view('admin.posts.edit',compact('posts','categories'));
     }
 
     /**
@@ -93,8 +96,23 @@ class AdminPostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostEditRequest $request, $id)
     {
+        $input=$request->all();
+
+        if($file=$request->file('photo_id'))
+        {
+            $name=time().$file->getClientOriginalName();
+            $file->move('post_image',$name);
+
+            $photo=Photo::create(['file'=>$name]);
+
+            $input['photo_id']=$photo->id;
+        }
+        
+        \Auth::user()->post()->whereId($id)->first()->update($input);
+
+        return redirect('admin/post');
         //
     }
 
@@ -106,6 +124,17 @@ class AdminPostController extends Controller
      */
     public function destroy($id)
     {
+        $post=Post::findOrFail($id);
+        
+        $photo=$post->photo;
+       
+        unlink(public_path()."/post_image/".$post->photo->file);
+
+        $photo->delete();
+        $post->delete();
+        // \Auth::user()->post()->whereId($id)->first()->delete();
+
+       return redirect('admin/post');
         //
     }
 }

@@ -24,11 +24,11 @@
     	@foreach($posts as $post)
       <tr>
       	<td>{{$post->id}}</td>
-      	<td>{{$post->user->name}}</td>
-      	<td><a href="../{{$post->user->photo->file}}"><img src="../{{$post->user->photo->file}}" style="height: 50px;width: 50px;"></a></td>
+      	<td><a href="{{route('admin.post.edit',$post->id)}}">{{$post->user->name}}</a></td>
+      	<td><a href="../user_image/{{$post->user->photo->file}}"><img src="../user_image/{{$post->user->photo->file}}" style="height: 50px;width: 50px;"></a></td>
       	<td>{{$post->category ? $post->category->name : 'Unactegorized'}}</td>
         <td>{{$post->title}}</td>
-        <td>{{$post->body}}</td>
+        <td>{{str_limit($post->body,20)}}<span>...<a href="#">Read More</a></span></td>
         <td>{{$post->created_at->diffForhumans()}}</td>
         <td>{{$post->updated_at->diffForhumans()}}</td>
         
