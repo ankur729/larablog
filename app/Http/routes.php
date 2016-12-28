@@ -42,10 +42,9 @@ Route::resource('admin/post','AdminPostController');
 Route::resource('admin/categories','AdminCategoriesController');	
 Route::resource('admin/media','AdminMediaController');
 
-
+Route::resource('admin/comments','PostCommentController');
+Route::resource('admin/comments/replies','CommentsRepliesController');
 
 });
 
-Route::get('test/',function(){
-	return "delete";
-});
+Route::get('post/{id}',['as'=>'home.post','uses'=>'AdminPostController@post']);
