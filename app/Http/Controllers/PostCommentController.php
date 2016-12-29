@@ -16,6 +16,8 @@ class PostCommentController extends Controller
     public function index()
     {   
         $comments=Comment::all();
+
+        
         // return $comments;
         return view('admin.comments.index',compact('comments'));
         //
@@ -48,7 +50,7 @@ class PostCommentController extends Controller
             'body'=>$request->body,
             'is_active'=>0
         ];
-
+        return $data;
         Comment::create($data);
 
         $request->session()->flash('comment_message','Your Comment Successfully Posted.Held for Review.!');

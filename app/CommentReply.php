@@ -13,7 +13,7 @@ class CommentReply extends Model
 	'body',
 	'is_active'
 	];
-	protected $table=['comment_replies'];
+	protected $table='comment_replies';
     //
 
     public function comment()

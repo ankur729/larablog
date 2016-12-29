@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-
+use App\CommentReply;
 class CommentRepliesController extends Controller
 {
     /**
@@ -82,5 +82,25 @@ class CommentRepliesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function createReply(Request $request)
+    {
+
+        // return $request->all();
+        $user=\Auth::user();
+
+        $data=[
+            'comment_id'=>$request->comment_id,
+            'author'=>$user->name,
+            'email'=>$user->email,
+            'body'=>$request->body,
+            'is_active'=>0
+        ];
+
+        CommentReply::create($data);
+
+        $request->session()->flash('comment_message','Your Comment Successfully Posted.Held for Review.!');
+        return \Redirect::back();
     }
 }

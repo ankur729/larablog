@@ -48,3 +48,9 @@ Route::resource('admin/comments/replies','CommentsRepliesController');
 });
 
 Route::get('post/{id}',['as'=>'home.post','uses'=>'AdminPostController@post']);
+
+Route::group(['middleware'=>'auth'],function(){
+
+Route::post('comment/reply','CommentRepliesController@createReply');
+
+});
