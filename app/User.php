@@ -49,6 +49,16 @@ class User extends Authenticatable
 
         return false;
     }
+      public function isAuthor()
+    {
+
+        if($this->role->name=='author')
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     public function post()
     {

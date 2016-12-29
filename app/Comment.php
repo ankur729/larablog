@@ -17,7 +17,13 @@ class Comment extends Model
 	public function replies()
 	
 	{
-		$this->hasMany('App\CommentReply');
+		return $this->hasMany('App\CommentReply');
     //
+	}
+
+	public function post()
+	{
+
+		return $this->belognsTo('App\Post');
 	}
 }

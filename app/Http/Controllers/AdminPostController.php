@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Post;
 use App\Photo;
 use App\Category;
+use App\Comment;
 class AdminPostController extends Controller
 {
     /**
@@ -141,8 +142,9 @@ class AdminPostController extends Controller
     public function post($id)
     {
         $post=Post::findOrFail($id);
-
-        return view('post',compact('post'));
+        $comments=Comment::where('post_id',$post->id)->where('is_active',1)->get();
+        
+        return view('post',compact('post','comments'));
 
 
     }

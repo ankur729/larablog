@@ -24,6 +24,11 @@ class Admin
             {
             return $next($request);
             }
+            else
+            if(\Auth::user()->isAuthor())
+            {
+            return $next($request);
+            }
         }
 
         return redirect(404);

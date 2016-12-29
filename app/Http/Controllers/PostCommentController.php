@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-
+use App\Comment;
 class PostCommentController extends Controller
 {
     /**
@@ -14,8 +14,10 @@ class PostCommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('admin.comments.index');
+    {   
+        $comments=Comment::all();
+        // return $comments;
+        return view('admin.comments.index',compact('comments'));
         //
     }
 
@@ -37,6 +39,20 @@ class PostCommentController extends Controller
      */
     public function store(Request $request)
     {
+        $user=\Auth::user();
+
+        $data=[
+            'post_id'=>$request->post_id,
+            'author'=>$user->name,
+            'email'=>$user->email,
+            'body'=>$request->body,
+            'is_active'=>0
+        ];
+
+        Comment::create($data);
+
+        $request->session()->flash('comment_message','Your Comment Successfully Posted.Held for Review.!');
+        return \Redirect::back();
         //
     }
 
@@ -48,6 +64,11 @@ class PostCommentController extends Controller
      */
     public function show($id)
     {
+        // return "yyyy";
+        $comments=Comment::where('post_id',$id)->get();
+        // return $comments;
+        return view('admin.comments.show',compact('comments'));
+      
         //
     }
 
@@ -71,6 +92,10 @@ class PostCommentController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        Comment::findOrFail($id)->update($request->all());
+
+        return \Redirect::back();
         //
     }
 
@@ -82,6 +107,10 @@ class PostCommentController extends Controller
      */
     public function destroy($id)
     {
+
+        Comment::findOrFail($id)->delete();
+
+        return \Redirect::back();
         //
     }
 }
